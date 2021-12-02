@@ -9,9 +9,9 @@ function Settings({children}) {
   let [hide, setHide] = useState(false);
 
   const values = {
-    pagination,
-    sort,
-    hide
+    pagination: 3,
+    sort: 'difficulty',
+    hide: false
   }
 
   return (

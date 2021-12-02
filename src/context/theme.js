@@ -11,8 +11,6 @@ class Theme extends React.Component {
     }
   }
   render() {
-
-    console.log(this.props, '<-- this dot props')
     return (
       <ThemeContext.Provider value={this.state}>
         {this.props.children}

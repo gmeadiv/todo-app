@@ -4,9 +4,7 @@ import { SettingsContext } from '../../context/site';
 import { v4 as uuid } from 'uuid';
 import { Button } from "@blueprintjs/core";
 
-const ToDo = (props) => {
-
-  console.log(props, '<-- props --<<')
+const ToDo = () => {
 
   let settings = useContext(SettingsContext)
 
@@ -74,11 +72,13 @@ const ToDo = (props) => {
       </form>
 
       {list.map(item => (
+        console.log(item, '<-- ITEM --<<'),
         <div key={item.id}>
           <p>{item.text}</p>
           <p><small>Assigned to: {item.assignee}</small></p>
           <p><small>Difficulty: {item.difficulty}</small></p>
           <div onClick={() => toggleComplete(item.id)}>Complete: {item.complete.toString()}</div>
+          <button onClick={() => deleteItem(item.id)} />
           <hr />
         </div>
       ))}

@@ -13,8 +13,10 @@ class Layout extends React.Component {
     console.log(this.context)
 
     const styles = {
-      backgroundColor: this.context.mode === 'dark' ? 'grey' : 'salmon',
+      backgroundColor: this.context.mode === 'dark' ? 'grey' : 'cream',
       opacity: '0.8',
+      fontFamily: 'Bangers, cursive',
+      height: '100%'
     }
 
     return (

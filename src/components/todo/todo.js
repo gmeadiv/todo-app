@@ -1,9 +1,14 @@
-import React, { useEffect, useState } from 'react';
+import React, { useContext, useEffect, useState } from 'react';
 import useForm from '../../hooks/form.js';
-
+import { SettingsContext } from '../../context/site';
 import { v4 as uuid } from 'uuid';
+import { Button } from "@blueprintjs/core";
 
-const ToDo = () => {
+const ToDo = (props) => {
+
+  console.log(props, '<-- props --<<')
+
+  let settings = useContext(SettingsContext)
 
   const [list, setList] = useState([]);
   const [incomplete, setIncomplete] = useState([]);
@@ -17,14 +22,14 @@ const ToDo = () => {
   }
 
   function deleteItem(id) {
-    const items = list.filter( item => item.id !== id);
+    const items = list.filter(item => item.id !== id);
     setList(items)
   }
 
   function toggleComplete(id) {
-    const items = list.map( item => {
-      if ( item.id === id) {
-        item.complete = ! item.complete;
+    const items = list.map(item => {
+      if (item.id === id) {
+        item.complete = !item.complete;
       }
       return item;
     })
@@ -36,10 +41,10 @@ const ToDo = () => {
     let incompleteCount = list.filter(item => !item.complete).length;
     setIncomplete(incompleteCount);
     document.title = `To Do List: ${incomplete}`
-  }, [list])
+  }, [list, incomplete])
 
   return (
-    <>
+    <div style={settings}>
       <header>
         <h1>To Do List: {incomplete} items pending</h1>
       </header>
@@ -64,7 +69,7 @@ const ToDo = () => {
         </label>
 
         <label>
-          <button type="submit">Add Item</button>
+          <Button type="submit">Add Item</Button>
         </label>
       </form>
 
@@ -78,7 +83,7 @@ const ToDo = () => {
         </div>
       ))}
 
-    </>
+    </div>
   )
 }
 

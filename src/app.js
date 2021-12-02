@@ -1,11 +1,17 @@
 import React from 'react';
 
 import ToDo from './components/todo/todo.js';
+import Layout from './components/layout.js';
+import { ThemeContext } from './context/theme.js';
+import { SettingsContext } from './context/site.js';
 
-export default class App extends React.Component {
-  render() {
-    return (
-      <ToDo />
-    )
-  }
+function App() {
+  return (
+    <div className='App'>
+      <Layout/>
+    </div>
+
+  )
 }
+
+export default App;

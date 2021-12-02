@@ -1,13 +1,21 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
 
+import './index.css';
 import App from './app.js';
+import Theme from './context/theme';
+import Settings from './context/site';
+import reportWebVitals from './reportWebVitals.js';
 
-class Main extends React.Component {
-  render() {
-    return <App />
-  }
-}
+ReactDOM.render(
+  <React.StrictMode>
+    <Theme>
+      <Settings>
+        <App />
+      </Settings>
+    </Theme>
+  </React.StrictMode>,
+  document.getElementById('root')
+);
 
-const rootElement = document.getElementById('root');
-ReactDOM.render(<Main />, rootElement);
+reportWebVitals();

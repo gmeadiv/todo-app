@@ -2,18 +2,21 @@ import React, { useState } from 'react';
 
 export const SettingsContext = React.createContext();
 
-function Settings(props) {
+function Settings({children}) {
 
-  console.log(props, '<-- props --<<')
+  let [pagination, setPagination] = useState(3);
+  let [sort, setSort] = useState('difficulty');
+  let [hide, setHide] = useState(false);
 
-  let [state, setState] = useState({
-    title: 'my website',
-    twitter: '@gmeadiv'
-  })
+  const values = {
+    pagination: 3,
+    sort: 'difficulty',
+    hide: false
+  }
 
   return (
-    <SettingsContext.Provider value={state}>
-      {props.children}
+    <SettingsContext.Provider value={values}>
+      {children}
     </SettingsContext.Provider>
   )
 }

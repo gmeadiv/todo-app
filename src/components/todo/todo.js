@@ -6,9 +6,11 @@ import { Button } from "@blueprintjs/core";
 
 const ToDo = () => {
 
-  let settings = useContext(SettingsContext)
+  let settingsValues = useContext(SettingsContext);
 
   const [list, setList] = useState([]);
+  const [endIndex, setEndIndex] = useState(settingsValues.pagination);
+  const [hide, setHide] = useState(settingsValues.hide);
   const [incomplete, setIncomplete] = useState([]);
   const { handleChange, handleSubmit } = useForm(addItem);
 
@@ -35,6 +37,31 @@ const ToDo = () => {
     setList(items)
   }
 
+  const paginate = () => {
+
+    let start = endIndex - settingsValues.pagination;
+
+    return list.slice(start, endIndex);
+  }
+
+  const handleNext = (e) => {
+    e.preventDefault();
+
+    setEndIndex(endIndex + settingsValues.pagination)
+  }
+
+  const handlePrevious = (e) => {
+    e.preventDefault();
+
+    setEndIndex(endIndex - settingsValues.pagination);
+  }
+
+  const handleHide = () => {
+
+    setHide(!hide)
+
+  }
+
   useEffect(() => {
     let incompleteCount = list.filter(item => !item.complete).length;
     setIncomplete(incompleteCount);
@@ -42,7 +69,7 @@ const ToDo = () => {
   }, [list, incomplete])
 
   return (
-    <div style={settings}>
+    <div style={settingsValues}>
       <header>
         <h1>To Do List: {incomplete} items pending</h1>
       </header>
@@ -71,19 +98,21 @@ const ToDo = () => {
         </label>
       </form>
 
-      {list.map(item => (
-        console.log(item, '<-- ITEM --<<'),
-        <div key={item.id}>
+      {paginate().map((item, idx) => (
+        <div key={idx}>
           <p>{item.text}</p>
           <p><small>Assigned to: {item.assignee}</small></p>
           <p><small>Difficulty: {item.difficulty}</small></p>
           <div onClick={() => toggleComplete(item.id)}>Complete: {item.complete.toString()}</div>
-          <button onClick={() => deleteItem(item.id)} >Delete</button>
           <hr />
+          <button onClick={() => deleteItem(item.id)}>Delete</button>
         </div>
       ))}
 
-    </div>
+      <button onClick={handlePrevious}>Previous</button>
+      <button onClick={handleNext}>Next</button>
+      <button onClick={handleHide}>Hide Completed Items</button>
+    </div >
   )
 }
 

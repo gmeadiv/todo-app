@@ -10,6 +10,7 @@ const ToDo = () => {
 
   const [list, setList] = useState([]);
   const [endIndex, setEndIndex] = useState(settingsValues.pagination);
+  const [hide, setHide] = useState(settingsValues.hide);
   const [incomplete, setIncomplete] = useState([]);
   const { handleChange, handleSubmit } = useForm(addItem);
 
@@ -39,7 +40,7 @@ const ToDo = () => {
   const paginate = () => {
 
     let start = endIndex - settingsValues.pagination;
-    
+
     return list.slice(start, endIndex);
   }
 
@@ -53,6 +54,12 @@ const ToDo = () => {
     e.preventDefault();
 
     setEndIndex(endIndex - settingsValues.pagination);
+  }
+
+  const handleHide = () => {
+
+    setHide(!hide)
+
   }
 
   useEffect(() => {
@@ -96,14 +103,16 @@ const ToDo = () => {
           <p>{item.text}</p>
           <p><small>Assigned to: {item.assignee}</small></p>
           <p><small>Difficulty: {item.difficulty}</small></p>
-          <button onClick={() => toggleComplete(item.id)}>Complete: {item.complete.toString()}</button>
-          <button onClick={() => deleteItem(item.id)} >Delete</button>
+          <div onClick={() => toggleComplete(item.id)}>Complete: {item.complete.toString()}</div>
           <hr />
+          <button onClick={() => deleteItem(item.id)}>Delete</button>
         </div>
       ))}
+
       <button onClick={handlePrevious}>Previous</button>
       <button onClick={handleNext}>Next</button>
-    </div>
+      <button onClick={handleHide}>Hide Completed Items</button>
+    </div >
   )
 }
 
